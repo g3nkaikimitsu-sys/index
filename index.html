@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SDIHS</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Times New Roman", serif;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(to right, #0a3a7a, #1e5fa8);
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+}
+.header h1 { font-size: 32px; }
+.header h2 { font-size: 22px; margin-top: 10px; }
+.header p { font-size: 14px; margin-top: 5px; }
+
+/* Navbar */
+.navbar { background-color: #2b3db8; }
+.navbar ul {
+    list-style: none;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+.navbar li { position: relative; margin-right: 25px; }
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    display: block;
+    cursor: pointer;
+}
+.navbar a:hover { background: #00bcd4; color: black; text-decoration: underline; }
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 38px;
+    left: 0;
+    background-color: #3f51d1;
+    min-width: 180px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.dropdown-content a { padding: 10px; display: block; }
+.dropdown-content a:hover { background-color: #5c6bff; }
+.dropdown:hover .dropdown-content { display: block; }
+
+/* Layout */
+.container {
+    display: flex;
+    min-height: 420px;
+    background-color: #d3d3d3;
+    padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    padding: 20px;
+    background-color: #c0c0c0;
+    border-radius: 8px;
+}
+.sidebar ul { list-style: none; }
+.sidebar li {
+    margin-bottom: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.sidebar li:hover { color: #2b3db8; }
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 40px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+}
+.content h2 { margin-bottom: 20px; }
+.content p, .content ul { font-size: 18px; }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #0a3a7a;
+    color: white;
+}
+
+/* Activity styles */
+.question { margin: 10px 0; }
+input[type="text"]{ width:30px; text-align:center; }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>SDIHS</h1>
+<h2>Santo Domingo Integrated High School</h2>
+<p>Barangay Santo Domingo, Santa Rosa City, Laguna</p>
+</div>
+
+<div class="navbar">
+<ul>
+<li><a onclick="changeContent('Home')">Home</a></li>
+
+<li class="dropdown">
+<a>Activity</a>
+<div class="dropdown-content">
+<a onclick="changeContent('Activity 1')">Activity 1</a>
+<a onclick="changeContent('Activity 2')">Activity 2</a>
+<a onclick="changeContent('Activity 3')">Activity 3</a>
+</div>
+</li>
+
+<li class="dropdown">
+<a>Assessment</a>
+<div class="dropdown-content">
+<a onclick="changeContent('Assessment 1')">Assessment 1</a>
+<a onclick="changeContent('Assessment 2')">Assessment 2</a>
+<a onclick="changeContent('Assessment 3')">Assessment 3</a>
+</div>
+</li>
+
+<li><a onclick="changeContent('About')">About</a></li>
+</ul>
+</div>
+
+<div class="container">
+
+<div class="sidebar">
+<ul>
+<li onclick="changeContent('Content')">Content</li>
+<li onclick="changeContent('Objectives')">Objectives</li>
+<li onclick="changeContent('Legal Basis')">Legal Basis</li>
+<li onclick="changeContent('References')">References</li>
+<li onclick="changeContent('Video Guide')">Video Guide</li>
+</ul>
+</div>
+
+<div class="content" id="mainContent">
+<h2>About Our School</h2>
+<p>Welcome to SDIHS! Click the sidebar or navbar to view other content.</p>
+</div>
+
+</div>
+
+<div class="footer">© 2026 SDIHS</div>
+
+<script>
+const contents = {
+
+"Content": `
+<p>The Digital School Guide is a web-based system that helps newly enrolled students easily find their assigned classrooms and important school facilities. 
+Its purpose is to make navigation inside the school faster, easier, and more organized.</p>
+`,
+
+"Objectives": `
+<p><b>Objectives:</b><br><br>
+• To provide clear and organized information about classroom locations and school facilities.<br>
+• To reduce confusion and time wasted in finding assigned rooms.<br>
+• To improve students’ orientation experience during enrollment and the first day of classes.<br>
+• To promote the use of technology in improving school services.<br>
+• To create a user-friendly digital platform accessible through mobile devices and computers.</p>
+`,
+
+"Legal Basis": `
+<p><b>LEGAL BASIS</b><br><br>
+1987 Philippine Constitution (Article XIV – Education)<br>
+Republic Act No. 10533 (Enhanced Basic Education Act of 2013)<br>
+Republic Act No. 10173 (Data Privacy Act of 2012)<br>
+DepEd ICT Policies and Digital Education Initiatives</p>
+`,
+
+"Activity 1": `
+<h3>Activity 1: School Building Quiz</h3>
+
+<p><span id="s1">⬤</span> 1. Which building is only occupied by Junior High School students?</p>
+<label><input type="radio" name="q1" value="a"> Building 1</label><br>
+<label><input type="radio" name="q1" value="b"> Building 2</label><br>
+<label><input type="radio" name="q1" value="c"> Building 3</label>
+<p id="f1"></p>
+
+<p><span id="s2">⬤</span> 2. Which building does NOT have a canteen?</p>
+<label><input type="radio" name="q2" value="a"> Building 1</label><br>
+<label><input type="radio" name="q2" value="b"> Building 2</label><br>
+<label><input type="radio" name="q2" value="c"> Building 3</label>
+<p id="f2"></p>
+
+<p><span id="s3">⬤</span> 3. Which building is purely occupied by Senior High School students?</p>
+<label><input type="radio" name="q3" value="a"> Building 1</label><br>
+<label><input type="radio" name="q3" value="b"> Building 2</label><br>
+<label><input type="radio" name="q3" value="c"> Building 3</label>
+<p id="f3"></p>
+
+<p><span id="s4">⬤</span> 4. Which building has a mix of Junior and Senior High School students?</p>
+<label><input type="radio" name="q4" value="a"> Building 1</label><br>
+<label><input type="radio" name="q4" value="b"> Building 2</label><br>
+<label><input type="radio" name="q4" value="c"> Building 3</label>
+<p id="f4"></p>
+
+<p><span id="s5">⬤</span> 5. Which building has a canteen on the first floor?</p>
+<label><input type="radio" name="q5" value="a"> Building 1</label><br>
+<label><input type="radio" name="q5" value="b"> Building 2</label><br>
+<label><input type="radio" name="q5" value="c"> Building 3</label>
+<p id="f5"></p>
+
+<br>
+<button type="button" onclick="checkActivity1()">Submit</button>
+<h3 id="finalScore"></h3>
+`,
+
+"Activity 2": `
+<h3>Activity 2: Matching Type</h3>
+
+<p><b>Instruction:</b> Type the correct letter for each number.</p>
+
+<p><b>Sections:</b></p>
+<p>1. Kanlaon</p>
+<p>2. Sierra Madre</p>
+<p>3. Mayon</p>
+<p>4. Halcon</p>
+
+<p><b>Partners:</b></p>
+<p>A. Matapat</p>
+<p>B. Corinthians</p>
+<p>C. Magalang</p>
+<p>D. Matatag</p>
+
+<hr>
+
+<div class="question">1. Kanlaon → <input type="text" id="a1" maxlength="1"> <span id="m1">●</span> <span id="fa1"></span></div>
+<div class="question">2. Sierra Madre → <input type="text" id="a2" maxlength="1"> <span id="m2">●</span> <span id="fa2"></span></div>
+<div class="question">3. Mayon → <input type="text" id="a3" maxlength="1"> <span id="m3">●</span> <span id="fa3"></span></div>
+<div class="question">4. Halcon → <input type="text" id="a4" maxlength="1"> <span id="m4">●</span> <span id="fa4"></span></div>
+
+<br>
+<button onclick="checkActivity2()">Check Answers</button>
+<h3 id="score2"></h3>
+`,
+
+"Activity 3": `
+<h3>Activity 3: True or False Quiz</h3>
+
+<p><span id="t1">⬤</span> 1. Does section Marcos share the same room with section Exodus?</p>
+<label><input type="radio" name="tq1" value="true"> True</label><br>
+<label><input type="radio" name="tq1" value="false"> False</label>
+<p id="tf1"></p>
+
+<p><span id="t2">⬤</span> 2. Does section Makiling share the same room with section Mapahmahal?</p>
+<label><input type="radio" name="tq2" value="true"> True</label><br>
+<label><input type="radio" name="tq2" value="false"> False</label>
+<p id="tf2"></p>
+
+<p><span id="t3">⬤</span> 3. Does section Chronicles share the same room with section Makapagal?</p>
+<label><input type="radio" name="tq3" value="true"> True</label><br>
+<label><input type="radio" name="tq3" value="false"> False</label>
+<p id="tf3"></p>
+
+<p><span id="t4">⬤</span> 4. Does section Pulag share the same room with section Matipid?</p>
+<label><input type="radio" name="tq4" value="true"> True</label><br>
+<label><input type="radio" name="tq4" value="false"> False</label>
+<p id="tf4"></p>
+
+<p><span id="t5">⬤</span> 5. Does section Quezon share the same room with section Colossians?</p>
+<label><input type="radio" name="tq5" value="true"> True</label><br>
+<label><input type="radio" name="tq5" value="false"> False</label>
+<p id="tf5"></p>
+
+<br>
+<button type="button" onclick="checkActivity3()">Submit Answers</button>
+<h3 id="finalScore3"></h3>
+`,
+
+"Assessment 1": `
+<h3>Assessment 1: Multiple Choice</h3>
+
+<p>1. What is the most popular organization in Sto. Domingo?</p>
+<label><input type="radio" name="as1" value="a"> Red Cross</label><br>
+<label><input type="radio" name="as1" value="b"> SSLG</label><br>
+<label><input type="radio" name="as1" value="c"> AP Club</label><br>
+<label><input type="radio" name="as1" value="d"> Boy Scout</label>
+<p id="af1"></p>
+
+<p>2. How many sections does Grade 10 have?</p>
+<label><input type="radio" name="as2" value="a"> 10</label><br>
+<label><input type="radio" name="as2" value="b"> 8</label><br>
+<label><input type="radio" name="as2" value="c"> 5</label><br>
+<label><input type="radio" name="as2" value="d"> 7</label>
+<p id="af2"></p>
+
+<p>3. How many strands does Sto. Domingo provide?</p>
+<label><input type="radio" name="as3" value="a"> 3</label><br>
+<label><input type="radio" name="as3" value="b"> 2</label><br>
+<label><input type="radio" name="as3" value="c"> 5</label><br>
+<label><input type="radio" name="as3" value="d"> 4</label>
+<p id="af3"></p>
+
+<p>4. Is Sto. Domingo a public school?</p>
+<label><input type="radio" name="as4" value="a"> Maybe</label><br>
+<label><input type="radio" name="as4" value="b"> No</label><br>
+<label><input type="radio" name="as4" value="c"> Yes</label><br>
+<label><input type="radio" name="as4" value="d"> All of the above</label>
+<p id="af4"></p>
+
+<br>
+<button type="button" onclick="checkAssessment1()">Submit Answers</button>
+<h3 id="scoreA1"></h3>
+`,
+
+
+
+"References": `
+<p>Official Gazette of the Republic of the Philippines. (1987). 1987 Philippine Constitution.<br>
+Republic Act No. 10533. (2013). Enhanced Basic Education Act of 2013.<br>
+Republic Act No. 10173. (2012). Data Privacy Act of 2012.<br>
+Department of Education. ICT in Education Programs.</p>
+`,
+
+"About": `
+<a href="https://www.facebook.com/share/1ARpUuf1kM/"><h3>Yugen Fhilip C. Baculi</h3></a><br>
+<a href=" https://www.facebook.com/share/1PZ6bjUJr5/"><h3>Ryan Mamuyac</h3></a><br>
+<a href="https://www.facebook.com/share/17z7jtVw6n/"><h3>Prince Lawrence Lobetania</h3></a><br>
+<a href="https://www.facebook.com/share/1PZ6bjUJr5/"><h3>Kyle Velando</h3></a<br>
+<a href="<h3>Gollen Rosales</h3>
+
+`,
+
+
+"Video Guide": `
+<h1>First Building Guide:</h1>
+<br>
+<h2>Section Halcon-10/Conrinthians-8</h2>
+<video width="350" controls>
+<source src="Halcon.mp4" type="video/mp4">
+</video>
+<h2>Section Kanlaon-10/Magalang-9</h2>
+<video width="350" controls>
+<source src="Kanlaon.mp4" type="video/mp4"> 
+</video>
+
+<h2>Section Sierra Madra-10/Matatag-9</h2>
+<video width="350" controls>
+<source src="Sierramadre.mp4" type="video/mp4"> 
+</video>
+
+<h2>Section Colossians-8/Quezon-7</h2>
+<video width="350" controls>
+<source src="Colossians.mp4" type="video/mp4"> 
+</video>
+
+<h2>Section Banahaw-10/Matipid-9</h2>
+<video width="350" controls>
+<source src="Banahaw.mp4" type="video/mp4"> 
+</video>
+
+<h2>Section Mapagmahal-9/Marcos-7</h2>
+<video width="350" controls>
+<source src="Mapagmahal.mp4" type="video/mp4"> 
+</video>
+
+
+`
+};
+
+function changeContent(title){
+document.getElementById("mainContent").innerHTML =
+`<h2>${title}</h2>` + (contents[title] || "<p>Coming soon...</p>");
+}
+
+/* Activity 1 Logic */
+function checkActivity1(){
+const answers={q1:"a",q2:"c",q3:"c",q4:"b",q5:"b"};
+let score=0;
+
+for(let i=1;i<=5;i++){
+const q=document.querySelector(`input[name="q${i}"]:checked`);
+const dot=document.getElementById(`s${i}`);
+const f=document.getElementById(`f${i}`);
+
+if(!q){
+dot.style.color="gray";
+f.innerHTML="⚠ No answer";
+f.style.color="orange";
+}
+else if(q.value===answers[`q${i}`]){
+dot.style.color="green";
+f.innerHTML="✅ Correct";
+f.style.color="green";
+score++;
+}
+else{
+dot.style.color="red";
+f.innerHTML="❌ Wrong";
+f.style.color="red";
+}
+}
+
+const fs=document.getElementById("finalScore");
+fs.innerHTML=`Your Score: ${score} / 5`;
+
+if(score==5){fs.style.color="green"; fs.innerHTML+=" 🎉 Excellent";}
+else if(score>=3){fs.style.color="blue"; fs.innerHTML+=" 🙂 Good job";}
+else{fs.style.color="red"; fs.innerHTML+=" 😢 Try again";}
+}
+
+/* Activity 2 Logic */
+function checkActivity2(){
+const answers={a1:"c",a2:"d",a3:"a",a4:"b"};
+let score=0;
+
+for(let i=1;i<=4;i++){
+const input=document.getElementById(`a${i}`);
+const dot=document.getElementById(`m${i}`);
+const f=document.getElementById(`fa${i}`);
+let v=input.value.toLowerCase().trim();
+
+if(v===""){
+dot.style.color="gray";
+f.innerHTML=" ⚠ No answer";
+f.style.color="orange";
+}
+else if(v===answers[`a${i}`]){
+dot.style.color="green";
+f.innerHTML=" ✅ Correct";
+f.style.color="green";
+score++;
+}else{
+dot.style.color="red";
+f.innerHTML=" ❌ Wrong";
+f.style.color="red";
+}
+}
+
+const s=document.getElementById("score2");
+s.innerHTML=`Your Score: ${score} / 4`;
+
+if(score==4){s.style.color="green"; s.innerHTML+=" 🎉 Perfect";}
+else if(score>=2){s.style.color="blue"; s.innerHTML+=" 🙂 Good job";}
+else{s.style.color="red"; s.innerHTML+=" 😢 Try again";}
+}
+
+/* Activity 3 Logic */
+function checkActivity3(){
+const answers={tq1:"true",tq2:"false",tq3:"true",tq4:"false",tq5:"true"};
+let score=0;
+
+for(let i=1;i<=5;i++){
+const q=document.querySelector(`input[name="tq${i}"]:checked`);
+const dot=document.getElementById(`t${i}`);
+const f=document.getElementById(`tf${i}`);
+
+if(!q){
+dot.style.color="gray";
+f.innerHTML="⚠ No answer";
+f.style.color="orange";
+}
+else if(q.value===answers[`tq${i}`]){
+dot.style.color="green";
+f.innerHTML="✅ Correct";
+f.style.color="green";
+score++;
+}
+else{
+dot.style.color="red";
+f.innerHTML="❌ Wrong";
+f.style.color="red";
+}
+}
+
+const fs=document.getElementById("finalScore3");
+fs.innerHTML=`Your Score: ${score} / 5`;
+
+if(score==5){fs.style.color="green"; fs.innerHTML+=" 🎉 Excellent";}
+else if(score>=3){fs.style.color="blue"; fs.innerHTML+=" 🙂 Good job";}
+else{fs.style.color="red"; fs.innerHTML+=" 😢 Try again";}
+}
+
+/* Assessment 1 Logic */
+function checkAssessment1(){
+const answers={as1:"b",as2:"d",as3:"a",as4:"c"};
+let score=0;
+for(let i=1;i<=4;i++){
+const q=document.querySelector(`input[name="as${i}"]:checked`);
+const f=document.getElementById(`af${i}`);
+if(!q){f.innerHTML="⚠ No answer"; f.style.color="orange";}
+else if(q.value===answers[`as${i}`]){f.innerHTML="✅ Correct"; f.style.color="green"; score++;}
+else{f.innerHTML="❌ Wrong"; f.style.color="red";}
+}
+document.getElementById("scoreA1").innerHTML=`Your Score: ${score}/4`;
+}
+
+</script>
+
+</body>
+</html>
